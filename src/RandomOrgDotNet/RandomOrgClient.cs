@@ -120,13 +120,11 @@ namespace RandomOrgDotNet
             }
         }
 
-        public async Task<(bool running, int requestsUsedPercent, int bitsUsedPercent)> GetUsageAsync()
+        public async Task<(bool running, int requestsLeft, int bitsLeft)> GetUsageAsync()
         {
             var rawResult = await apiStub.GetUsage(apiKey);
             var running = rawResult.Status == GetUsageResponseV1.StatusType.running;
-            var requestPercent = 100 * rawResult.TotalRequests / (rawResult.TotalRequests + rawResult.RequestsLeft);
-            var bitsPercent = 100 * rawResult.TotalBits / (rawResult.TotalBits + rawResult.BitsLeft);
-            return (running, requestPercent, bitsPercent);
+            return (running, rawResult.RequestsLeft, rawResult.BitsLeft);
         }
 
         public void Dispose()

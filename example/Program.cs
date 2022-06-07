@@ -8,8 +8,8 @@ string apiKey = string.Empty;
 
 var client = new RandomOrgDotNet.RandomClient(apiKey);
 
-(bool running, int requestsUsedPercent, int bitsUsedPercent) = await client.GetUsageAsync();
-Console.WriteLine($"apiKey status: running {running} requestsUsed: {requestsUsedPercent}% bitsUsed: {bitsUsedPercent}%");
+(bool running, int requestsLeft, int bitsLeft) = await client.GetUsageAsync();
+Console.WriteLine($"apiKey status: running {running} requestsLeft: {requestsLeft} bitsLeft: {bitsLeft}");
 
 Console.WriteLine("Rolling 10 dice:");
 var a1 = await client.GenerateIntegersAsync(10, 1, 6);
@@ -42,8 +42,8 @@ Parallel.For(1, 6, (iter) =>
     }).Wait();
 });
 
-(running, requestsUsedPercent, bitsUsedPercent) = await client.GetUsageAsync();
-Console.WriteLine($"apiKey status: running {running} requestsUsed: {requestsUsedPercent}% bitsUsed: {bitsUsedPercent}%");
+(running, requestsLeft, bitsLeft) = await client.GetUsageAsync();
+Console.WriteLine($"apiKey status: running {running} requestsLeft: {requestsLeft}% bitsLeft: {bitsLeft}%");
 
 Console.WriteLine("Finished, press a key to quit");
 Console.ReadKey();
